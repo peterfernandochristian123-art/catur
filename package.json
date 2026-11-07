@@ -1,0 +1,19 @@
+{
+  "name": "catur-sekolah",
+  "version": "1.0.0",
+  "description": "Arena Catur Sekolah & Leaderboard Antar-Kelas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "tunnel": "npx -y localtunnel --port 3000"
+  },
+  "keywords": [
+    "chess",
+    "catur",
+    "multiplayer",
+    "webrtc",
+    "peerjs"
+  ],
+  "author": "",
+  "license": "ISC"
+}

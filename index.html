@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Web Permainan Catur Sekolah - Arena catur interaktif untuk siswa dan ekskul sekolah dengan mode PvP, Bot AI, Latihan Taktik, dan Leaderboard Antar-Kelas.">
+  <title>Catur Sekolah - Arena Catur & Leaderboard Antar-Kelas</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-dark theme-wood">
+
+  <!-- App Header & Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M19 22H5v-2h14v2m-1-4H6l1.2-6h9.6L18 18M9.5 8C8.7 8 8 7.3 8 6.5S8.7 5 9.5 5 11 5.7 11 6.5 10.3 8 9.5 8m5 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5M12 2a2 2 0 0 1 2 2c0 .7-.4 1.4-1 1.7v1.6c1.6.4 2.8 1.8 3 3.5l1.4 7.2H6.6L8 10.8c.2-1.7 1.4-3.1 3-3.5V5.7c-.6-.3-1-1-1-1.7a2 2 0 0 1 2-2Z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">Catur Sekolah</h1>
+          <span class="brand-badge">Arena Antar-Kelas</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="main-nav" aria-label="Navigasi Utama">
+        <button id="nav-tab-play" class="nav-btn active" data-tab="play">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>Main Catur</span>
+        </button>
+        <button id="nav-tab-practice" class="nav-btn" data-tab="practice">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <span>Latihan & Puzzle</span>
+        </button>
+        <button id="nav-tab-leaderboard" class="nav-btn" data-tab="leaderboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path>
+            <path d="M18 17v-2.34"></path>
+            <path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path>
+            <path d="M18 4H6v7a6 6 0 0 0 12 0V4Z"></path>
+          </svg>
+          <span>Leaderboard</span>
+        </button>
+      </nav>
+
+      <!-- User Profile & Quick Actions -->
+      <div class="header-actions">
+        <button id="btn-owner-tools" class="icon-btn hidden" title="Owner Tools" aria-label="Owner Tools" style="display:none;">⚙️</button>
+        <select id="select-piece-style" class="form-control piece-style-select" title="Gaya Bidak Catur" aria-label="Gaya Bidak Catur">
+          <option value="classic">Bidak: Klasik</option>
+          <option value="bold">Bidak: Tegas</option>
+          <option value="minimal">Bidak: Minimalis</option>
+          <option value="contrast">Bidak: Kontras</option>
+        </select>
+        <button id="btn-theme-toggle" class="icon-btn" title="Ganti Tema Papan" aria-label="Ganti Tema">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <button id="btn-sound-toggle" class="icon-btn active" title="Suara Efek" aria-label="Toggle Suara">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Tombol Masuk / Login Firebase -->
+        <button id="btn-open-auth" class="btn-auth-header" title="Masuk dengan Google atau Email">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          <span id="btn-auth-header-text">Masuk / Daftar</span>
+        </button>
+
+        <button id="btn-user-profile" class="user-pill-btn" aria-label="Profil Siswa">
+          <div class="user-avatar" id="header-user-avatar">♚</div>
+          <div class="user-info-text">
+            <span class="user-name" id="header-user-name">Siswa Catur</span>
+            <span class="user-class" id="header-user-class">Kelas X-A • 1200 ELO</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- ==================== TAB 1: MAIN CATUR ==================== -->
+    <section id="tab-play-content" class="tab-pane active">
+      <div class="game-layout">
+        
+        <!-- Kolom Kiri: Papan Catur & Jam -->
+        <div class="board-column">
+          
+          <!-- Info Pemain Atas (Hitam / Lawan) -->
+          <div class="player-bar top-player" id="top-player-bar">
+            <div class="player-meta">
+              <span class="player-icon" id="top-player-icon">👤</span>
+              <div class="player-details">
+                <span class="player-label" id="top-player-name">Pemain 2 (Hitam)</span>
+                <span class="player-sub" id="top-player-sub">Lokal</span>
+              </div>
+            </div>
+            <!-- Captured Pieces By White -->
+            <div class="captured-box" id="captured-by-white"></div>
+            <!-- Chess Clock Top -->
+            <div class="chess-clock" id="clock-top">10:00</div>
+          </div>
+
+          <!-- Container Papan Catur -->
+          <div class="chessboard-wrapper">
+            <div id="chessboard" class="chessboard" aria-label="Papan Catur Interaktif">
+              <!-- Grid 8x8 dan bidak dibuat dinamis via JavaScript -->
+            </div>
+          </div>
+
+          <!-- Info Pemain Bawah (Putih / Kamu) -->
+          <div class="player-bar bottom-player" id="bottom-player-bar">
+            <div class="player-meta">
+              <span class="player-icon" id="bottom-player-icon">👤</span>
+              <div class="player-details">
+                <span class="player-label" id="bottom-player-name">Kamu (Putih)</span>
+                <span class="player-sub" id="bottom-player-sub">Kelas X-A • 1200 ELO</span>
+              </div>
+            </div>
+            <!-- Captured Pieces By Black -->
+            <div class="captured-box" id="captured-by-black"></div>
+            <!-- Chess Clock Bottom -->
+            <div class="chess-clock" id="clock-bottom">10:00</div>
+          </div>
+
+          <!-- Quick Move Controls -->
+          <div class="board-controls">
+            <button id="btn-flip-board" class="control-btn" title="Balik Sudut Papan">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+              </svg>
+              <span>Balik Papan</span>
+            </button>
+            <button id="btn-undo-move" class="control-btn" title="Undo Langkah Sebelumnya">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 7v6h6"></path>
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path>
+              </svg>
+              <span>Undo</span>
+            </button>
+            <button id="btn-hint" class="control-btn" title="Minta Petunjuk Langkah">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18h6"></path>
+                <path d="M10 22h4"></path>
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7Z"></path>
+              </svg>
+              <span>Hint</span>
+            </button>
+            <button id="btn-offer-draw" class="control-btn" title="Tawarkan / Setuju Remis">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 7h8"></path>
+                <path d="M8 12h8"></path>
+                <path d="M8 17h5"></path>
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+              </svg>
+              <span>Remis</span>
+            </button>
+            <button id="btn-resign" class="control-btn danger" title="Menyerah">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+              <span>Menyerah</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Kolom Kanan: Panel Kontrol Game & Mode -->
+        <div class="sidebar-column">
+          
+          <!-- Mode Selector Card -->
+          <div class="glass-card mode-selector-card">
+            <h2 class="card-title">Pilih Mode Permainan</h2>
+            
+            <div class="mode-options-grid">
+              <button class="mode-card active" data-mode="local">
+                <div class="mode-icon">👥</div>
+                <div class="mode-info">
+                  <h3>PvP 1 Layar</h3>
+                  <p>2 Pemain bergantian di 1 laptop</p>
+                </div>
+              </button>
+
+              <button class="mode-card" data-mode="online">
+                <div class="mode-icon">🌐</div>
+                <div class="mode-info">
+                  <h3>PvP Ruang PIN</h3>
+                  <p>Tanding antarkomputer lab sekolah</p>
+                </div>
+              </button>
+            </div>
+
+            <!-- Mode Config Subpanel: Online PIN -->
+            <div id="online-config-subpanel" class="mode-subpanel">
+              
+              <!-- Pilihan Tipe Jaringan: Internet Jarak Jauh vs WiFi Lokal -->
+              <div class="online-net-toggle">
+                <button type="button" class="net-toggle-btn active" id="btn-net-p2p" data-net="p2p">
+                  <span>🌐 Internet Jarak Jauh</span>
+                  <small>Beda WiFi / Kota / Kuota HP</small>
+                </button>
+                <button type="button" class="net-toggle-btn" id="btn-net-lan" data-net="lan">
+                  <span>🏫 WiFi / Lab Lokal</span>
+                  <small>1 Router WiFi yang sama</small>
+                </button>
+              </div>
+
+              <!-- Network Access Info Hint -->
+              <div class="online-ip-tip" id="online-ip-tip-box">
+                <span class="ip-icon" id="online-tip-icon">🌐</span>
+                <div class="ip-text">
+                  <small id="online-mode-tip-title">Mode: Internet Jarak Jauh (P2P WebRTC)</small>
+                  <strong id="lan-ip-display">Siap tanding antar-kota & beda jaringan</strong>
+                </div>
+              </div>
+
+              <!-- Create / Join Form -->
+              <div id="online-form-view" class="online-room-actions">
+                <button id="btn-create-room" class="btn-primary full-width">
+                  <span class="btn-icon">⚡</span> Buat Ruang Tanding Baru
+                </button>
+                <div class="divider"><span>atau gabung PIN</span></div>
+                <div class="join-room-row">
+                  <input type="text" id="input-room-code" placeholder="Kode PIN (4 angka)" maxlength="4" autocomplete="off">
+                  <button id="btn-join-room" class="btn-secondary">Gabung</button>
+                </div>
+              </div>
+
+              <!-- Active Room Live Card -->
+              <div id="active-room-card" class="active-room-card hidden">
+                <div class="room-card-header">
+                  <div class="room-status-indicator waiting" id="room-status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="room-status-label">Menunggu lawan...</span>
+                  </div>
+                  <span class="room-pin-tag">PIN: <strong id="display-room-pin">----</strong></span>
+                </div>
+
+                <div class="room-card-body">
+                  <div class="room-player-row">
+                    <span class="role-badge" id="online-my-role">♔ Anda: Putih</span>
+                    <span class="opponent-badge" id="online-opponent-badge">Lawan: Menunggu...</span>
+                  </div>
+                  <div class="room-link-tip" id="room-link-tip-box">
+                    💡 Kirim link tanding ke teman lewat WhatsApp/Chat agar lawan bisa langsung masuk!
+                  </div>
+                </div>
+
+                <div class="room-card-actions">
+                  <button id="btn-copy-pin" class="btn-secondary btn-sm" title="Salin PIN">📋 Salin PIN</button>
+                  <button id="btn-copy-link" class="btn-primary btn-sm" title="Salin Link Tanding">🔗 Salin Link</button>
+                  <button id="btn-rematch-room" class="btn-primary btn-sm hidden">🔄 Tanding Ulang</button>
+                  <button id="btn-leave-room" class="btn-danger-outline btn-sm">🚪 Keluar</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time Control Selector -->
+            <div class="time-control-section">
+              <label class="subpanel-label">Durasi Waktu Pertandingan:</label>
+              <div class="time-presets">
+                <button class="time-btn" data-time="180">3 Menit (Blitz)</button>
+                <button class="time-btn active" data-time="600">10 Menit (Rapid)</button>
+                <button class="time-btn" data-time="0">Tanpa Batas</button>
+              </div>
+            </div>
+
+            <button id="btn-start-game" class="btn-primary btn-large full-width">
+              Mulai Pertandingan Baru
+            </button>
+          </div>
+
+          <!-- Status & Notasi Langkah Card -->
+          <div class="glass-card game-status-card">
+            <div class="status-header">
+              <span class="status-indicator-dot"></span>
+              <span id="game-status-text" class="status-text">Giliran Putih untuk melangkah</span>
+            </div>
+
+            <div class="move-history-container">
+              <div class="move-history-header">
+                <span>No.</span>
+                <span>Putih</span>
+                <span>Hitam</span>
+              </div>
+              <div id="move-history-list" class="move-history-list">
+                <!-- Riwayat langkah (1. e4 e5 ...) dimasukkan dinamis -->
+                <div class="empty-history">Belum ada langkah</div>
+              </div>
+            </div>
+
+            <!-- Evaluasi Sederhana Bar -->
+            <div class="eval-bar-wrapper" title="Evaluasi Posisi">
+              <div class="eval-bar-fill" id="eval-bar-fill" style="width: 50%;"></div>
+            </div>
+            <div class="eval-labels">
+              <span>Putih</span>
+              <span id="eval-score-text">Imbang (0.0)</span>
+              <span>Hitam</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: LATIHAN & PUZZLE ==================== -->
+    <section id="tab-practice-content" class="tab-pane">
+      <div class="tactics-layout">
+        <!-- Peta Stage (Duolingo-style path) -->
+        <div class="tactics-path-column">
+          <div class="glass-card tactics-summary-card">
+            <div class="tactics-summary-top">
+              <div>
+                <h3 class="card-title" style="margin-bottom:0.2rem;">Jalur Taktik</h3>
+                <p class="tactics-subtitle">Selesaikan level secara berurutan untuk membuka tahap berikutnya.</p>
+              </div>
+              <div class="tactics-xp-badge" id="tactics-xp-badge">0 XP</div>
+            </div>
+            <div class="tactics-progress-bar">
+              <div class="tactics-progress-fill" id="tactics-progress-fill" style="width:0%"></div>
+            </div>
+            <div class="tactics-progress-meta" id="tactics-progress-meta">0/0 level selesai</div>
+          </div>
+
+          <div class="tactics-path" id="tactics-path-container" aria-label="Peta level taktik">
+            <!-- Stage/level path dirender dinamis -->
+          </div>
+        </div>
+
+        <!-- Area Bermain Puzzle -->
+        <div class="tactics-play-column">
+          <div class="glass-card tactics-play-header">
+            <div class="tactics-play-info">
+              <div class="tactics-stage-label" id="tactics-stage-label">Bab -</div>
+              <h2 id="puzzle-title" class="puzzle-title">Pilih level untuk mulai</h2>
+              <p id="puzzle-desc" class="puzzle-desc">Klik level yang terbuka di jalur taktik untuk memulai latihan.</p>
+            </div>
+            <div class="tactics-play-badges">
+              <div class="puzzle-badge" id="puzzle-difficulty-badge">-</div>
+              <div class="tactics-stars" id="tactics-stars">☆☆☆</div>
+            </div>
+          </div>
+
+          <div class="chessboard-wrapper">
+            <div id="practice-board" class="chessboard" aria-label="Papan Latihan Catur">
+              <!-- Papan Latihan dinamis -->
+            </div>
+          </div>
+
+          <div class="board-controls">
+            <button id="btn-puzzle-hint" class="control-btn">
+              <span>💡 Petunjuk</span>
+            </button>
+            <button id="btn-reset-puzzle" class="control-btn">
+              <span>🔄 Ulangi</span>
+            </button>
+            <button id="btn-next-playable" class="control-btn highlight">
+              <span>Lanjut Level Berikutnya →</span>
+            </button>
+          </div>
+
+          <div class="glass-card tactics-feedback-card">
+            <h3 class="card-title">Umpan Balik & Tips</h3>
+            <p id="tactics-tip-text" class="tactics-tip-text">
+              "Kuasai kotak tengah papan (e4, d4, e5, d5) untuk membuka peluang taktik."
+            </p>
+            <p id="tactics-feedback-text" class="tactics-feedback-text">Selesaikan level untuk mendapat bintang dan XP.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: LEADERBOARD ==================== -->
+    <section id="tab-leaderboard-content" class="tab-pane">
+      <div class="leaderboard-layout">
+        
+        <!-- Tab Antar Siswa vs Antar Kelas -->
+        <div class="leaderboard-nav-container">
+          <div class="segmented-control">
+            <button class="seg-btn active" id="seg-students" data-view="students">Peringkat Siswa</button>
+            <button class="seg-btn" id="seg-classes" data-view="classes">Peringkat Antar-Kelas</button>
+          </div>
+          <button id="btn-refresh-leaderboard" class="btn-secondary">
+            🔄 Segarkan Data
+          </button>
+        </div>
+
+        <!-- Tabel Leaderboard Siswa -->
+        <div id="leaderboard-students-view" class="glass-card leaderboard-card">
+          <table class="leaderboard-table" aria-label="Peringkat Siswa">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Rank</th>
+                <th>Siswa</th>
+                <th>Kelas</th>
+                <th>Rating ELO</th>
+                <th>Menang / Seri / Kalah</th>
+                <th>Win Streak</th>
+              </tr>
+            </thead>
+            <tbody id="student-leaderboard-body">
+              <!-- Dimuat dinamis dari Firebase / LocalStorage -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tabel Leaderboard Kelas -->
+        <div id="leaderboard-classes-view" class="glass-card leaderboard-card hidden">
+          <table class="leaderboard-table" aria-label="Peringkat Kelas">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Rank</th>
+                <th>Kelas</th>
+                <th>Total Kemenangan</th>
+                <th>Poin Akumulasi</th>
+                <th>Pemain Bintang</th>
+              </tr>
+            </thead>
+            <tbody id="class-leaderboard-body">
+              <!-- Dimuat dinamis -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal Edit Profil Siswa -->
+  <div id="modal-profile" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Profil Siswa Catur</h3>
+        <button class="modal-close" id="btn-close-profile">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="input-profile-name">Nama Siswa / Username:</label>
+          <input type="text" id="input-profile-name" class="form-control" placeholder="Nama Anda (misal: Budi Santoso)">
+        </div>
+        <div class="form-group">
+          <label for="input-profile-class">Kelas:</label>
+          <select id="input-profile-class" class="form-control">
+            <option value="X-A">Kelas X-A</option>
+            <option value="X-B">Kelas X-B</option>
+            <option value="X-C">Kelas X-C</option>
+            <option value="XI-MIPA-1">Kelas XI-MIPA-1</option>
+            <option value="XI-MIPA-2">Kelas XI-MIPA-2</option>
+            <option value="XI-IPS-1">Kelas XI-IPS-1</option>
+            <option value="XII-MIPA-1">Kelas XII-MIPA-1</option>
+            <option value="XII-IPS-1">Kelas XII-IPS-1</option>
+            <option value="Guru / Staf">Guru / Pembina Ekskul</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Pilih Avatar Favorit:</label>
+          <div class="avatar-picker" id="avatar-picker-container">
+            <button class="avatar-option active" data-avatar="♚">♚</button>
+            <button class="avatar-option" data-avatar="♛">♛</button>
+            <button class="avatar-option" data-avatar="♜">♜</button>
+            <button class="avatar-option" data-avatar="♝">♝</button>
+            <button class="avatar-option" data-avatar="♞">♞</button>
+            <button class="avatar-option" data-avatar="♟">♟</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-profile" class="btn-primary full-width">Simpan Profil</button>
+        <button id="btn-open-history" class="btn-secondary full-width" style="margin-top: 0.6rem;">📜 Riwayat Pertandingan (30 Terakhir)</button>
+        <button id="btn-owner-tools-profile" class="btn-secondary full-width hidden" style="margin-top: 0.6rem; display:none;">⚙️ Owner Tools</button>
+        <button id="btn-logout-account" class="btn-danger-outline full-width" style="margin-top: 0.6rem;">Keluar dari Akun (Logout)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Riwayat Pertandingan Real-time Firestore -->
+  <div id="modal-game-history" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📜 Riwayat Pertandingan Catur</h3>
+        <button class="modal-close" id="btn-close-history">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height: 440px; overflow-y: auto; padding: 1rem;">
+        <div id="game-history-empty" class="history-empty hidden" style="text-align: center; padding: 2rem 1rem; color: var(--text-dim);">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">♟️</div>
+          <p>Belum ada riwayat pertandingan tercatat.</p>
+          <small>Mainkan pertandingan melawan Bot atau Siswa lain untuk mencatat riwayat!</small>
+        </div>
+        <div id="game-history-list" class="game-history-list">
+          <!-- Item riwayat dimuat dinamis dari Firestore query games collection -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Login & Register Firebase -->
+  <div id="modal-auth" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog auth-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="auth-modal-title">Masuk ke Catur Sekolah</h3>
+        <button class="modal-close" id="btn-close-auth">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Google Login Button -->
+        <button id="btn-auth-google" class="btn-google-auth full-width" type="button">
+          <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Lanjutkan dengan Google</span>
+        </button>
+
+        <div class="divider auth-divider"><span>atau dengan Email</span></div>
+
+        <!-- Auth Tabs: Login vs Register -->
+        <div class="auth-tabs">
+          <button id="tab-auth-login" class="auth-tab-btn active" type="button">Masuk (Login)</button>
+          <button id="tab-auth-register" class="auth-tab-btn" type="button">Daftar Akun Baru</button>
+        </div>
+
+        <form id="auth-form" onsubmit="return false;">
+          <!-- Extra fields for Register -->
+          <div id="auth-register-fields" class="hidden">
+            <div class="form-group">
+              <label for="auth-input-name">Nama Siswa Lengkap:</label>
+              <input type="text" id="auth-input-name" class="form-control" placeholder="Nama Siswa" value="">
+            </div>
+            <div class="form-group">
+              <label for="auth-select-class">Kelas:</label>
+              <select id="auth-select-class" class="form-control">
+                <option value="X-A" selected>Kelas X-A</option>
+                <option value="X-B">Kelas X-B</option>
+                <option value="X-C">Kelas X-C</option>
+                <option value="XI-MIPA-1">Kelas XI-MIPA-1</option>
+                <option value="XI-MIPA-2">Kelas XI-MIPA-2</option>
+                <option value="XI-IPS-1">Kelas XI-IPS-1</option>
+                <option value="XII-MIPA-1">Kelas XII-MIPA-1</option>
+                <option value="XII-IPS-1">Kelas XII-IPS-1</option>
+                <option value="Guru / Staf">Guru / Pembina Ekskul</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="auth-input-email">Alamat Email:</label>
+            <input type="email" id="auth-input-email" class="form-control" placeholder="nama@email.com" value="" required>
+          </div>
+
+          <div class="form-group">
+            <label for="auth-input-password">Kata Sandi (Password):</label>
+            <input type="password" id="auth-input-password" class="form-control" placeholder="Minimal 6 karakter" required>
+          </div>
+
+          <!-- Alert message banner inside modal -->
+          <div id="auth-error-banner" class="auth-error-banner hidden"></div>
+
+          <button id="btn-auth-submit" class="btn-primary full-width" type="submit">
+            Masuk ke Akun
+          </button>
+        </form>
+
+        <div class="auth-switch-note">
+          <span id="auth-switch-text">Belum memiliki akun?</span>
+          <button id="btn-auth-switch" class="btn-text-link" type="button">Daftar sekarang</button>
+        </div>
+
+        <!-- Firebase Config Link -->
+        <div class="auth-footer-link">
+          <button id="btn-open-firebase-cfg" class="btn-link-subtle" type="button">⚙️ Pengaturan Kredensial Firebase</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Pengaturan Firebase (Opsional / Admin) -->
+  <div id="modal-firebase-settings" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Konfigurasi Firebase Server Sekolah</h3>
+        <button class="modal-close" id="btn-close-firebase">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          Masukkan konfigurasi Firebase proyek sekolah Anda untuk mengaktifkan sinkronisasi cloud real-time antar komputer lab. Jika dikosongkan, sistem otomatis menggunakan penyimpanan lokal (LocalStorage) yang tetap siap dimainkan offline.
+        </p>
+        <div class="form-group">
+          <label for="input-firebase-config">JSON Firebase Config:</label>
+          <textarea id="input-firebase-config" class="form-control" rows="6" placeholder='{ "apiKey": "...", "authDomain": "...", "projectId": "..." }'></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-firebase" class="btn-primary">Simpan Konfigurasi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Owner Tools -->
+  <div id="modal-owner-tools" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog" style="max-width: 760px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Owner Tools</h3>
+        <button class="modal-close" id="btn-close-owner-tools">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc" style="margin-bottom:0.75rem;">Khusus owner (<code>peterfernandochristian123@gmail.com</code>). Aksi ke data pemain lain di Firestore memerlukan <code>firestore.rules</code> yang sudah di-deploy.</p>
+        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+          <input type="text" id="owner-user-search" class="form-control" placeholder="Cari nama / email / uid..." style="flex:1; min-width:180px;">
+          <button id="btn-owner-refresh-users" class="btn-secondary" type="button">Muat Ulang</button>
+        </div>
+        <div id="owner-tools-status" style="font-size:0.8rem; color:var(--text-dim); margin:0.25rem 0 0.5rem;"></div>
+        <div id="owner-users-list" style="max-height: 52vh; overflow:auto; border:1px solid var(--border-glass); border-radius:8px; padding:0.25rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Promosi Pion -->
+  <div id="modal-promotion" class="modal-overlay hidden" style="display: none !important; pointer-events: none !important;">
+    <div class="modal-dialog small">
+      <div class="modal-header">
+        <h3 class="modal-title">Promosi Pion</h3>
+      </div>
+      <div class="modal-body">
+        <p>Pilih perwira untuk promosi pion Anda:</p>
+        <div class="promotion-pieces" id="promotion-options">
+          <button class="promo-btn" data-piece="q">♛ Ratu (Queen)</button>
+          <button class="promo-btn" data-piece="r">♜ Benteng (Rook)</button>
+          <button class="promo-btn" data-piece="b">♝ Gajah (Bishop)</button>
+          <button class="promo-btn" data-piece="n">♞ Kuda (Knight)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- WebRTC Peer-to-Peer Remote Multiplayer (Zero-Config Global Internet) -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="js/p2p-multiplayer.js"></script>
+
+  <!-- Local App Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/chess-engine.js"></script>
+  <script src="js/ai-bot.js"></script>
+  <script src="js/puzzles.js"></script>
+  <script src="js/firebase-service.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

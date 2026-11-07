@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAppOwner() {
+      return isSignedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email == 'peterfernandochristian123@gmail.com';
+    }
+
+    function validUserProfile() {
+      let data = request.resource.data;
+      return data.name is string
+        && data.studentClass is string
+        && data.rating is number
+        && data.rating >= 0
+        && (!('wins' in data) || (data.wins is number && data.wins >= 0))
+        && (!('draws' in data) || (data.draws is number && data.draws >= 0))
+        && (!('losses' in data) || (data.losses is number && data.losses >= 0))
+        && (!('streak' in data) || (data.streak is number && data.streak >= 0))
+        && (!('hidden' in data) || data.hidden is bool);
+    }
+
+    function isRoomParticipant(room) {
+      return isSignedIn() && (
+        room.host.uid == request.auth.uid
+        || (room.guest is map && room.guest.uid == request.auth.uid)
+      );
+    }
+
+    // ==========================================
+    // 1. KOLEKSI: users (Profil & Leaderboard)
+    // ==========================================
+    match /users/{userId} {
+      // Leaderboard/profil dapat dibaca publik agar peringkat terlihat.
+      allow read: if true;
+
+      // Pembuatan & pembaruan profil/progres oleh pemilik akun, atau owner aplikasi (tools admin).
+      allow create, update: if (isOwner(userId) || isAppOwner()) && validUserProfile();
+
+      // Hapus profil dari leaderboard/data: hanya owner aplikasi.
+      allow delete: if isAppOwner();
+    }
+
+    // ==========================================
+    // 2. KOLEKSI: games (Riwayat Pertandingan)
+    // ==========================================
+    match /games/{gameId} {
+      // Riwayat dapat dibaca oleh pengguna login (pemilik riwayat ada di players).
+      allow read: if isSignedIn() && (
+        resource == null || !( 'players' in resource.data ) || request.auth.uid in resource.data.players
+      );
+
+      // Simpan progres/hasil pertandingan hanya jika pengguna login tercatat sebagai pemain.
+      allow create: if isSignedIn()
+        && request.resource.data.players is list
+        && request.resource.data.players.size() >= 1
+        && request.auth.uid in request.resource.data.players
+        && request.resource.data.result is string
+        && request.resource.data.mode is string;
+
+      // Catatan pertandingan yang sudah tersimpan tidak boleh diubah/dihapus dari klien.
+      allow update, delete: if false;
+    }
+
+    // ==========================================
+    // 3. KOLEKSI: rooms (Multiplayer Online Cloud)
+    // ==========================================
+    match /rooms/{pin} {
+      // Wajib login sebelum membaca/membuat/bergabung/memperbarui room cloud.
+      allow read: if isSignedIn();
+
+      // Membuat ruang baru: host harus pengguna yang login, PIN sesuai path, status waiting.
+      allow create: if isSignedIn()
+        && request.resource.data.pin == pin
+        && request.resource.data.host is map
+        && request.resource.data.host.uid == request.auth.uid
+        && request.resource.data.status == 'waiting';
+
+      // Update oleh host, tamu yang sudah terdaftar, atau tamu yang sedang bergabung.
+      allow update: if isSignedIn()
+        && request.resource.data.pin == resource.data.pin
+        && (
+          isRoomParticipant(resource.data)
+          || (resource.data.status == 'waiting'
+              && request.resource.data.guest is map
+              && request.resource.data.guest.uid == request.auth.uid)
+        );
+
+      allow delete: if false;
+    }
+
+  }
+}
