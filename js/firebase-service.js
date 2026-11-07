@@ -978,6 +978,15 @@ class SchoolChessService {
   // ==================== OWNER / ADMIN TOOLS ====================
   _requireOwner() {
     if (!this.isOwner()) throw new Error('Akses ditolak: khusus owner.');
+    // Owner tools that modify/read all users via Firestore need a real Firebase Auth session
+    // with the owner email. Local/session-only login makes request.auth null in Firestore rules.
+    if (this.isFirebaseReady && typeof firebase !== 'undefined' && firebase.auth) {
+      const fbUser = firebase.auth().currentUser;
+      const fbEmail = String((fbUser && fbUser.email) || '').trim().toLowerCase();
+      if (!fbUser || !this.ownerEmails.includes(fbEmail)) {
+        throw new Error('Owner tools memerlukan login Firebase aktif sebagai akun owner (peterfernandochristian123@gmail.com). Silakan Keluar lalu masuk lagi dengan akun Google/email owner tersebut, dan pastikan firestore.rules sudah di-deploy ke project Firebase.');
+      }
+    }
   }
 
   async ownerListUsers() {
